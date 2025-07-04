@@ -1,61 +1,81 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Electronics Multi-Tenant Market
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This is a Laravel 12 multi-tenant e-commerce project using [stancl/tenancy](https://tenancyforlaravel.com/).  
+The system allows running **multiple stores** (tenants) on different subdomains, with a central market homepage for choosing a store.  
+Each store has its own products and an admin panel to manage them.
 
-## About Laravel
+## Features
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- **Central Market Homepage:**  
+  `/` on the main domain (e.g. `127.0.0.1:8000`) lists all available stores and lets users choose which store to visit.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- **Multiple Tenants (Stores):**  
+  Each store has its own subdomain, e.g. `store1.localhost:8000`, `store2.localhost:8000`, etc.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **Dynamic Store List:**  
+  The homepage fetches all tenants dynamically from the tenants table.
 
-## Learning Laravel
+- **Admin Dashboard (per store):**  
+  Each store has its own admin dashboard accessible by store admins only, where they can manage products.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- **Product Management:**  
+  Store admins can create, edit, delete, and list products for their own store only.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Setup Instructions
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+1. **Clone the repo and install dependencies:**
+    ```bash
+    git clone ...
+    composer install
+    npm install && npm run build
+    ```
 
-## Laravel Sponsors
+2. **Configure `.env`**
+    - Set DB connection.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+3. **Run migrations and seeders:**
 
-### Premium Partners
+    ```bash
+    php artisan migrate --seed
+    ```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+4. **Start the server:**
+    ```bash
+    php artisan serve
+    ```
+    Visit [http://127.0.0.1:8000](http://127.0.0.1:8000) for the central market homepage.
 
-## Contributing
+5. **Admin Dashboard:**  
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+   To access the **Admin Dashboard** for each store, use the following demo accounts:
 
-## Code of Conduct
+    | Store    | Admin Email              | Password        |
+    |----------|--------------------------|-----------------|
+    | store1   | adminstore1@gmail.com    | adminstore1     |
+    | store2   | adminstore2@gmail.com    | adminstore2     |
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+- Each admin is restricted to their own store and cannot access other stores’ dashboards.
 
-## Security Vulnerabilities
+## Credits
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+- Laravel 12
+- [stancl/tenancy](https://tenancyforlaravel.com/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- Livewire 
 
-## License
+## Screenshots
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### 1. Central Market Homepage
+<img src="screenshots/market-home.png" width="700"/>
+
+### 2. Store Homepage
+<img src="screenshots/store-home.png" width="700"/>
+
+### 4. Cart
+<img src="screenshots/cart.png" width="700"/>
+
+### 3. Admin Dashboard
+<img src="screenshots/admin-dashboard.png" width="700"/>
+
+
+
