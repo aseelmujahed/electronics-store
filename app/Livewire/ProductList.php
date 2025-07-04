@@ -5,6 +5,8 @@ namespace App\Livewire;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Cart;
+use App\Models\Product;
+use Illuminate\Support\Facades\Log;
 
 class ProductList extends Component
 {
@@ -16,7 +18,13 @@ class ProductList extends Component
         $this->search = $this->searchInput;
     }
 
-    public function addToCart($productId) {
+    public function addToCart($productId)
+    {
+        Log::info("addToCart called", [
+        'user_id' => Auth::id(),
+        'tenant_id' => tenant('id'),
+        'product_id' => $productId
+    ]);
         if (!Auth::check()) {
             session()->flash('error', 'You must login first!');
             return;
@@ -24,9 +32,20 @@ class ProductList extends Component
 
         $userId = Auth::id();
 
-        $cartItem = Cart::where('user_id', $userId)
-            ->where('product_id', $productId)
+        $product = Product::where('id', $productId)
+            ->where('tenant_id', tenant('id'))
             ->first();
+
+        if (!$product) {
+            session()->flash('error', 'This product does not belong to this store.');
+            return;
+        }
+
+        $cartItem = Cart::where('user_id', $userId)
+    ->where('product_id', $productId)
+    ->where('tenant_id', tenant('id'))
+    ->first();
+
 
         if ($cartItem) {
             $cartItem->quantity += 1;
@@ -36,20 +55,27 @@ class ProductList extends Component
                 'user_id' => $userId,
                 'product_id' => $productId,
                 'quantity' => 1,
+                'tenant_id' => tenant('id'),
             ]);
         }
 
         $this->dispatch('toast', message: 'Product added to your cart!');
-
     }
-    
+
     public function render()
     {
+        Log::info("RENDER PRODUCTLIST", [
+        'tenant_id' => tenant('id'),
+        'route' => request()->path()
+    ]);
+        $tenantId = tenant('id');
+
         return view('livewire.product-list', [
-            'products' => \App\Models\Product::when($this->search, function ($query) {
-                $search = $this->search;
-                return $query->where('name', 'like', "%$search%");
-            })->get(),
+            'products' => Product::where('tenant_id', $tenantId)
+                ->when($this->search, function ($query) {
+                    $search = $this->search;
+                    return $query->where('name', 'like', "%$search%");
+                })->get(),
         ])->layout('layouts.app');
     }
 }

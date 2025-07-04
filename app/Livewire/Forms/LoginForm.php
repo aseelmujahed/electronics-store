@@ -38,6 +38,16 @@ class LoginForm extends Form
             ]);
         }
 
+        $user = Auth::user();
+
+        if (tenant('id') && $user->tenant_id != tenant('id')) {
+            Auth::logout();
+            RateLimiter::hit($this->throttleKey());
+            throw ValidationException::withMessages([
+                'form.email' => 'You do not have permission to access this store.',
+            ]);
+        }
+
         RateLimiter::clear($this->throttleKey());
     }
 
@@ -67,6 +77,6 @@ class LoginForm extends Form
      */
     protected function throttleKey(): string
     {
-        return Str::transliterate(Str::lower($this->email).'|'.request()->ip());
+        return Str::transliterate(Str::lower($this->email) . '|' . request()->ip());
     }
 }

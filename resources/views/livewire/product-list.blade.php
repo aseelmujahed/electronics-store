@@ -17,9 +17,10 @@
 
     </div>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6" >
         @foreach($products as $product)
-        <div class="bg-white shadow-lg rounded-lg overflow-hidden flex flex-col items-center p-4 hover:scale-105 transition-transform w-full">
+        
+        <div class="bg-white shadow-lg rounded-lg overflow-hidden flex flex-col items-center p-4 hover:scale-105 transition-transform w-full" wire:key="product-{{ $product->id }}">
             <img src="{{ $product->image ?? 'https://via.placeholder.com/150' }}"
                 alt="{{ $product->name }}"
                 class="w-32 h-32 object-cover mb-4 rounded-md">

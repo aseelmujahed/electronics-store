@@ -3,7 +3,6 @@
 use App\Livewire\Actions\Logout;
 use Livewire\Volt\Component;
 
-
 new class extends Component
 {
     /**
@@ -15,7 +14,8 @@ new class extends Component
 
         $this->redirect('/', navigate: true);
     }
-}; ?>
+};
+?>
 
 <nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
     <!-- Primary Navigation Menu -->
@@ -24,15 +24,21 @@ new class extends Component
             <div class="flex">
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    
+
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" wire:navigate>
-                      Products
+                        Products
                     </x-nav-link>
 
-                    <x-nav-link :href="route('cart')" :active="request()->routeIs('cart')" wire:navigate>
+                    <x-nav-link :href="route('tenant.cart')" :active="request()->routeIs('tenant.cart')" wire:navigate>
                         Cart
                     </x-nav-link>
-
+                    @auth
+                    @if(auth()->user()->role === 'admin')
+                    <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')" wire:navigate>
+                        Admin Dashboard
+                    </x-nav-link>
+                    @endif
+                    @endauth
                 </div>
             </div>
 
@@ -52,7 +58,7 @@ new class extends Component
                     </x-slot>
 
                     <x-slot name="content">
-                        <x-dropdown-link :href="route('profile')" wire:navigate>
+                        <x-dropdown-link :href="route('tenant.profile')" wire:navigate>
                             {{ __('Profile') }}
                         </x-dropdown-link>
 
@@ -85,9 +91,17 @@ new class extends Component
                 {{ __('Products') }}
             </x-responsive-nav-link>
 
-            <x-responsive-nav-link :href="route('cart')" :active="request()->routeIs('cart')" wire:navigate>
-            {{ __('Cart') }}
-        </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('tenant.cart')" :active="request()->routeIs('tenant.cart')" wire:navigate>
+                {{ __('Cart') }}
+            </x-responsive-nav-link>
+
+            @auth
+            @if(auth()->user()->role === 'admin')
+            <x-responsive-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')" wire:navigate>
+                Admin Dashboard
+            </x-responsive-nav-link>
+            @endif
+            @endauth
         </div>
 
         <!-- Responsive Settings Options -->
@@ -98,7 +112,7 @@ new class extends Component
             </div>
 
             <div class="mt-3 space-y-1">
-                <x-responsive-nav-link :href="route('profile')" wire:navigate>
+                <x-responsive-nav-link :href="route('tenant.profile')" wire:navigate>
                     {{ __('Profile') }}
                 </x-responsive-nav-link>
 

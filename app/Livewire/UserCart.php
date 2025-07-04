@@ -7,23 +7,35 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\Product;
 
 class UserCart extends Component
 {
     public $showCheckout = false;
 
+    protected function getTenantId()
+    {
+        return tenant('id');
+    }
+
     public function removeFromCart($cartId)
     {
-        $item = Cart::find($cartId);
-        if ($item && $item->user_id == Auth::id()) {
+        $item = Cart::where('id', $cartId)
+            ->where('tenant_id', $this->getTenantId())
+            ->where('user_id', Auth::id())
+            ->first();
+        if ($item) {
             $item->delete();
         }
     }
 
     public function increaseQuantity($cartId)
     {
-        $item = Cart::find($cartId);
-        if ($item && $item->user_id == Auth::id()) {
+        $item = Cart::where('id', $cartId)
+            ->where('tenant_id', $this->getTenantId())
+            ->where('user_id', Auth::id())
+            ->first();
+        if ($item) {
             $item->quantity += 1;
             $item->save();
         }
@@ -31,8 +43,11 @@ class UserCart extends Component
 
     public function decreaseQuantity($cartId)
     {
-        $item = Cart::find($cartId);
-        if ($item && $item->user_id == Auth::id()) {
+        $item = Cart::where('id', $cartId)
+            ->where('tenant_id', $this->getTenantId())
+            ->where('user_id', Auth::id())
+            ->first();
+        if ($item) {
             if ($item->quantity > 1) {
                 $item->quantity -= 1;
                 $item->save();
@@ -41,18 +56,28 @@ class UserCart extends Component
             }
         }
     }
+
     public function checkout()
     {
-        if (Cart::where('user_id', Auth::id())->count() == 0) {
+        $cartCount = Cart::where('user_id', Auth::id())
+            ->where('tenant_id', $this->getTenantId())
+            ->count();
+        if ($cartCount == 0) {
             session()->flash('error', 'Your cart is empty!');
             return;
         }
         $this->showCheckout = true;
     }
+
     public function placeOrder()
     {
         $userId = Auth::id();
-        $cartItems = Cart::with('product')->where('user_id', $userId)->get();
+        $tenantId = $this->getTenantId();
+
+        $cartItems = Cart::with('product')
+            ->where('user_id', $userId)
+            ->where('tenant_id', $tenantId)
+            ->get();
 
         if ($cartItems->count() == 0) {
             session()->flash('error', 'Your cart is empty!');
@@ -66,17 +91,19 @@ class UserCart extends Component
 
         $order = Order::create([
             'user_id' => $userId,
+            'tenant_id' => $tenantId,
             'total' => $total,
         ]);
 
         foreach ($cartItems as $item) {
             OrderItem::create([
                 'order_id' => $order->id,
+                'tenant_id' => $tenantId,
                 'product_id' => $item->product_id,
                 'quantity' => $item->quantity,
                 'price' => $item->product->price,
             ]);
-            $item->delete(); 
+            $item->delete();
         }
 
         $this->showCheckout = false;
@@ -87,10 +114,12 @@ class UserCart extends Component
     {
         $cartItems = [];
         $total = 0;
+        $tenantId = $this->getTenantId();
 
         if (Auth::check()) {
             $cartItems = Cart::with('product')
                 ->where('user_id', Auth::id())
+                ->where('tenant_id', $tenantId)
                 ->get();
 
             $total = $cartItems->sum(function ($item) {

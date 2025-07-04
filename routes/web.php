@@ -1,19 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\DB;
 
-Route::view('/', 'welcome');
-
-use App\Livewire\ProductList;
-
-Route::get('/dashboard', ProductList::class)->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::view('profile', 'profile')
-    ->middleware(['auth'])
-    ->name('profile');
-
-use App\Livewire\UserCart;
-
-Route::get('/cart', UserCart::class)->middleware('auth')->name('cart');
+Route::get('/', function () {
+    $stores = DB::table('tenants')->get(['id']);
+    return view('market-home', compact('stores'));
+});
 
 require __DIR__.'/auth.php';
