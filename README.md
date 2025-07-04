@@ -71,11 +71,8 @@ Each store has its own products and an admin panel to manage them.
 ### 2. Store Homepage
 <img src="screenshots/store-home.png" width="700"/>
 
-### 4. Cart
+### 3. Cart
 <img src="screenshots/cart.png" width="700"/>
 
-### 3. Admin Dashboard
+### 4. Admin Dashboard
 <img src="screenshots/admin-dashboard.png" width="700"/>
-
-
-
