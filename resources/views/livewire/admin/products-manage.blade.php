@@ -8,7 +8,7 @@
     @endif
 
     <button wire:click="showAddForm" class="mb-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-        + Add Product
+        Add Product
     </button>
 
     @if ($showForm)
