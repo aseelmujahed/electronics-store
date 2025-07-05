@@ -100,13 +100,9 @@ To access the **Admin Dashboard** for each store, use the following demo account
 ### 5. Admin Dashboard
 <img src="screenshots/admin-dashboard.png" width="700"/>
 
----
-
 ## Credits
 
 - Laravel 12
 - [stancl/tenancy](https://tenancyforlaravel.com/)
 - [Tailwind CSS](https://tailwindcss.com/)
 - Livewire
-
----
