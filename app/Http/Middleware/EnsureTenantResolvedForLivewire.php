@@ -11,7 +11,7 @@ class EnsureTenantResolvedForLivewire
     public function handle($request, Closure $next)
     {
         $host = $request->getHost();
-        if ($host === '127.0.0.1') {
+        if ($host === '127.0.0.1' || $host === '/super-admin') {
             return $next($request);
         }
 

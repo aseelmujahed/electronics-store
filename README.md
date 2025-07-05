@@ -21,20 +21,25 @@ Each store has its own products and an admin panel to manage them.
 - **Product Management:**  
   Store admins can create, edit, delete, and list products for their own store only.
 
+- **Super Admin Dashboard:**  
+  Platform owner can manage tenants, domains, and store admins centrally.
+
+---
+
 ## Setup Instructions
 
 1. **Clone the repo and install dependencies:**
     ```bash
-    git clone ...
+    git clone https://github.com/aseelmujahed/electronics-store.git
+    cd electronics-store
     composer install
     npm install && npm run build
     ```
 
 2. **Configure `.env`**
-    - Set DB connection.
+    - Set up your database connection .
 
 3. **Run migrations and seeders:**
-
     ```bash
     php artisan migrate --seed
     ```
@@ -45,23 +50,38 @@ Each store has its own products and an admin panel to manage them.
     ```
     Visit [http://127.0.0.1:8000](http://127.0.0.1:8000) for the central market homepage.
 
-5. **Admin Dashboard:**  
+---
 
-   To access the **Admin Dashboard** for each store, use the following demo accounts:
+## Super Admin Dashboard
 
-    | Store    | Admin Email              | Password        |
-    |----------|--------------------------|-----------------|
-    | store1   | adminstore1@gmail.com    | adminstore1     |
-    | store2   | adminstore2@gmail.com    | adminstore2     |
+A dedicated **Super Admin Dashboard** is available for the platform owner to manage all tenants (stores) in the system.
 
-- Each admin is restricted to their own store and cannot access other stores’ dashboards.
+**Super Admin** can:
+- View all tenants (stores) and their domains.
+- Create new tenants and assign admin accounts to them.
+- Delete tenants.
+- Manage store admins for each tenant (add/delete).
 
-## Credits
+**Accessing Super Admin Dashboard:**
 
-- Laravel 12
-- [stancl/tenancy](https://tenancyforlaravel.com/)
-- [Tailwind CSS](https://tailwindcss.com/)
-- Livewire 
+- **URL :**  [http://127.0.0.1:8000/super-admin](http://127.0.0.1:8000/super-admin)
+
+- **Demo Super Admin Account:**  
+    - **Email:** `superadmin@gmail.com`  
+    - **Password:** `superadmin`  
+
+---
+
+## Admin Dashboard (per store)
+
+To access the **Admin Dashboard** for each store, use the following demo accounts:
+
+| Store    | Admin Email              | Password        |
+|----------|--------------------------|-----------------|
+| store1   | adminstore1@gmail.com    | adminstore1     |
+| store2   | adminstore2@gmail.com    | adminstore2     |
+
+---
 
 ## Screenshots
 
@@ -74,5 +94,19 @@ Each store has its own products and an admin panel to manage them.
 ### 3. Cart
 <img src="screenshots/cart.png" width="700"/>
 
-### 4. Admin Dashboard
+### 4. Super Admin Dashboard
+<img src="screenshots/super-admin.png" width="700"/>
+
+### 5. Admin Dashboard
 <img src="screenshots/admin-dashboard.png" width="700"/>
+
+---
+
+## Credits
+
+- Laravel 12
+- [stancl/tenancy](https://tenancyforlaravel.com/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- Livewire
+
+---
