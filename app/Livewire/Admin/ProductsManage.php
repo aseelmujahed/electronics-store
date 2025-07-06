@@ -48,11 +48,11 @@ class ProductsManage extends Component
                 ->where('tenant_id', tenant('id'))
                 ->firstOrFail();
             $product->update($data);
-            session()->flash('message', 'Product updated successfully!');
+            session()->flash('message', __('messages.product_updated'));
         } else {
             $data['tenant_id'] = tenant('id');
             Product::create($data);
-            session()->flash('message', 'Product created successfully!');
+            session()->flash('message', __('messages.product_created'));
         }
 
         $this->resetFields();
@@ -65,7 +65,7 @@ class ProductsManage extends Component
             ->where('tenant_id', tenant('id'))
             ->firstOrFail();
         $product->delete();
-        session()->flash('message', 'Product deleted!');
+        session()->flash('message', __('messages.product_deleted'));
     }
 
     public function resetFields()

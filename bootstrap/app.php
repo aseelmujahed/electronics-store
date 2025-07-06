@@ -14,7 +14,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->web([
             \App\Http\Middleware\EnsureTenantResolvedForLivewire::class,
-
+            \App\Http\Middleware\SetLocale::class,
         ]);
         $middleware->alias([
             'admin' => AdminMiddleware::class,

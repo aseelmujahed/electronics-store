@@ -17,4 +17,13 @@ Route::post('/super-admin/logout', [SuperAdminController::class, 'logout'])->nam
 
 Route::middleware(['superadmin.session'])->get('/super-admin', SuperAdminDashboard::class)->name('superadmin.dashboard');
 
+Route::post('/change-language', function () {
+    $locale = request('locale');
+    if (in_array($locale, ['en', 'ar'])) {
+        session(['locale' => $locale]);
+        app()->setLocale($locale);
+    }
+    return back();
+})->name('change.language');
+
 require __DIR__.'/auth.php';

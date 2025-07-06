@@ -24,6 +24,9 @@ Each store has its own products and an admin panel to manage them.
 - **Super Admin Dashboard:**  
   Platform owner can manage tenants, domains, and store admins centrally.
 
+- **Multi-Language Support:**  
+  The platform supports full localization in **English** and **Arabic**. Users can easily switch between languages at any time, and all pages (including admin dashboards and store front) are translated.
+
 ---
 
 ## Setup Instructions
@@ -37,7 +40,7 @@ Each store has its own products and an admin panel to manage them.
     ```
 
 2. **Configure `.env`**
-    - Set up your database connection .
+    - Set up your database connection.
 
 3. **Run migrations and seeders:**
     ```bash
@@ -49,6 +52,25 @@ Each store has its own products and an admin panel to manage them.
     php artisan serve
     ```
     Visit [http://127.0.0.1:8000](http://127.0.0.1:8000) for the central market homepage.
+
+---
+
+## Multi-Language Support
+
+The platform includes **full support for multiple languages** (currently English and Arabic).  
+You can easily switch the interface language using the language selector at the top of each page.
+
+### **Demo: English & Arabic Interface**
+
+<p align="center">
+  <img src="screenshots/admin-dashboard-en.jpg" width="49%"/>
+  <img src="screenshots/admin-dashboard-ar.jpg" width="49%"/>
+</p>
+
+<p align="center">
+  <img src="screenshots/cart-en.jpg" width="49%"/>
+  <img src="screenshots/cart-ar.jpg" width="49%"/>
+</p>
 
 ---
 
@@ -64,7 +86,7 @@ A dedicated **Super Admin Dashboard** is available for the platform owner to man
 
 **Accessing Super Admin Dashboard:**
 
-- **URL :**  [http://127.0.0.1:8000/super-admin](http://127.0.0.1:8000/super-admin)
+- **URL:**  [http://127.0.0.1:8000/super-admin](http://127.0.0.1:8000/super-admin)
 
 - **Demo Super Admin Account:**  
     - **Email:** `superadmin@gmail.com`  
