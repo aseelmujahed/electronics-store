@@ -18,7 +18,6 @@
         </button>
     </div>
 
-
     @if ($showForm)
     <div class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
         <div class="bg-white rounded-lg shadow-2xl p-8 pt-12 w-full max-w-md relative">

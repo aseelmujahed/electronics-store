@@ -7,8 +7,8 @@ use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 use App\Livewire\ProductList;
 use App\Livewire\UserCart;
-use Stancl\Tenancy\Database\Models\Tenant;
-use Illuminate\Support\Facades\DB;
+    use App\Http\Controllers\DeliveryController;
+
 /*
 |--------------------------------------------------------------------------
 | Tenant Routes
@@ -45,6 +45,9 @@ Route::middleware([
     Route::get('/debug-tenant', function () {
         return 'Current tenant: ' . (tenant('id') ?? 'none');
     });
+
+    Route::get('/my-orders', \App\Livewire\MyOrders::class)->name('my.orders');
+
 });
 
 Route::middleware(['auth', 'verified', 'admin'])->group(function () {

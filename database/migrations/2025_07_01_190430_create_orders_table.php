@@ -15,7 +15,7 @@ return new class extends Migration
         $table->id();
         $table->foreignId('user_id')->constrained()->onDelete('cascade');
         $table->decimal('total', 10, 2);
-        $table->string('status')->default('pending'); 
+        $table->string('delivery_status')->default('pending');
         $table->timestamps();
     });
 }

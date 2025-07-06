@@ -14,26 +14,27 @@ new #[Layout('layouts.guest')] class extends Component
     public string $email = '';
     public string $password = '';
     public string $password_confirmation = '';
+    public string $location = '';
 
     /**
      * Handle an incoming registration request.
      */
-    public function register(): void
-    {
-        $validated = $this->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'string', 'confirmed', Rules\Password::defaults()],
-        ]);
+  public function register(): void
+{
+    $validated = $this->validate([
+        'name' => ['required', 'string', 'max:255'],
+        'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
+        'password' => ['required', 'string', 'confirmed', Rules\Password::defaults()],
+        'location' => ['required', 'string', 'max:255'],
+    ]);
 
-        $validated['password'] = Hash::make($validated['password']);
+    $validated['password'] = Hash::make($validated['password']);
+    $validated['tenant_id'] = explode('.', request()->getHost())[0];
 
-        event(new Registered($user = User::create($validated)));
-
-        Auth::login($user);
-
-        $this->redirect(route('dashboard', absolute: false), navigate: true);
-    }
+    event(new Registered($user = User::create($validated)));
+    Auth::login($user);
+    $this->redirect(route('dashboard', absolute: false), navigate: true);
+}
 }; ?>
 
 <div>
@@ -52,14 +53,21 @@ new #[Layout('layouts.guest')] class extends Component
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
+        <div class="mt-4">
+            <x-input-label for="location" :value="__('Location')" />
+            <x-text-input wire:model="location" id="location" class="block mt-1 w-full"
+                type="text" name="location" required autocomplete="address-level2" />
+            <x-input-error :messages="$errors->get('location')" class="mt-2" />
+        </div>
+
         <!-- Password -->
         <div class="mt-4">
             <x-input-label for="password" :value="__('Password')" />
 
             <x-text-input wire:model="password" id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="new-password" />
+                type="password"
+                name="password"
+                required autocomplete="new-password" />
 
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
@@ -69,8 +77,8 @@ new #[Layout('layouts.guest')] class extends Component
             <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
 
             <x-text-input wire:model="password_confirmation" id="password_confirmation" class="block mt-1 w-full"
-                            type="password"
-                            name="password_confirmation" required autocomplete="new-password" />
+                type="password"
+                name="password_confirmation" required autocomplete="new-password" />
 
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
         </div>

@@ -26,4 +26,14 @@ Route::post('/change-language', function () {
     return back();
 })->name('change.language');
 
+use App\Http\Controllers\DeliveryCompanyAuthController;
+
+Route::get('/delivery-company/login', [DeliveryCompanyAuthController::class, 'showLoginForm'])->name('delivery-company.login');
+Route::post('/delivery-company/login', [DeliveryCompanyAuthController::class, 'login']);
+Route::post('/delivery-company/logout', [DeliveryCompanyAuthController::class, 'logout'])->name('delivery-company.logout');
+
+Route::middleware('deliverycompany.auth')->group(function () {
+    Route::get('/delivery-company', \App\Livewire\DeliveryCompanyOrders::class)->name('delivery-company.dashboard');
+});
+
 require __DIR__.'/auth.php';

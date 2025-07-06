@@ -15,7 +15,7 @@ return [
     'actions' => 'Actions',
     'no_products' => 'No products found.',
     'delete' => 'Delete',
-     'product_created' => 'Product created successfully!',
+    'product_created' => 'Product created successfully!',
     'product_updated' => 'Product updated successfully!',
     'product_deleted' => 'Product deleted!',
 
@@ -60,4 +60,38 @@ return [
     'success_product_updated' => 'Product updated successfully!',
     'success_product_deleted' => 'Product deleted successfully!',
     'success_order_placed' => 'Order placed successfully!',
+
+
+    'my_orders' => 'My Orders',
+    'order_id' => 'Order ',
+    'total' => 'Total',
+    'status' => 'Status',
+    'date' => 'Date',
+    'no_orders' => 'You have no orders yet.',
+    'status_pending'    => 'Pending',
+    'status_processing' => 'Processing',
+    'status_shipped'    => 'Shipped',
+    'status_delivered'  => 'Delivered',
+    'status_cancelled'  => 'Cancelled',
+
+    'cancel_order' => 'Cancel Order',
+    'action' => 'Action',
+    'order_cancelled_successfully' => 'Order cancelled successfully.',
+    'cannot_cancel_order' => 'Cannot cancel this order.',
+    'cancel_note' => ' You can only cancel an order if its status is "Pending"',
+
+    'delivery_company_dashboard' => 'Delivery Company Dashboard',
+    'choose_store' => 'Choose a store to view orders',
+    'back_to_stores' => 'Back to stores list',
+    'orders_for_store' => 'Orders for store',
+    'order_status_updated' => 'Order status updated successfully.',
+    'customer' => 'Customer Name',
+    'status_pending' => 'Pending',
+    'status_processing' => 'Processing',
+    'status_shipped' => 'Shipped',
+    'status_delivered' => 'Delivered',
+    'status_cancelled' => 'Cancelled',
+    'location' => 'Location',
+
+
 ];

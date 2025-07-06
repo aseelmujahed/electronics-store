@@ -19,8 +19,8 @@
 
 <body class="font-sans antialiased">
     <div class="min-h-screen bg-gray-100">
-        {{-- Show navigation except on super-admin routes --}}
-        @if (!request()->is('super-admin*'))
+        {{-- Show navigation except on super-admin & delivery-company routes --}}
+        @if (!request()->is('super-admin*') && !request()->is('delivery-company*'))
         <livewire:layout.navigation />
         @endif
 
